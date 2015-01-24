@@ -1,0 +1,101 @@
+<?php $this->headTitle($this->translate('Overview')); ?>
+<h1><?php echo $this->escapeHtml($this->translate('Overview')); ?></h1>
+
+<form id="index-form">
+	<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d">
+		<h4>LED Control</h4>
+		<ul data-role="listview">
+			<li>
+				<div data-role="fieldcontain">
+					<label for="led_status">Static Light Status:</label>
+					<select name="data[led][status]" id="led_status" data-role="slider" data-track-theme="a" data-theme="a">
+						<option value="off">Off</option>
+						<option value="on" selected="selected">On</option>
+					</select>
+				</div>
+			</li>
+			<li>
+				<div data-role="fieldcontain">
+					<?php print_r($debug) ?>
+					<div id="colorpicker"></div>
+				</div>
+			</li>
+			<li>
+				<div data-role="fieldcontain">
+					<label for="led_color">Color:</label>
+					<input readonly="readonly" type="text" id="led_color" name="data[led][color]" value="#000000">
+				</div>
+			</li>
+			<li>
+				<div data-role="fieldcontain">
+					<label for="led_priority">Priority:</label>
+					<input type="text" name="data[led][priority]" id="led_priority" value="254">
+				</div>
+			</li>
+			<li>
+				<div data-role="fieldcontain">
+					<label for="led_brightness">Brigthness:</label>
+					<input type="text" name="data[led][brightness]" id="led_brightness" value="1.0">
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d">
+		<h4>Power Status</h4>
+		<ul data-role="listview">
+			<li>
+				<div data-role="fieldcontain">
+					<label for="power_a">Socket A:</label>
+					<select name="data[power][a]" id="power_a" data-role="slider" data-track-theme="a" data-theme="a">
+						<option value="off">Off</option>
+						<option value="on" selected="selected">On</option>
+					</select>
+				</div>
+			</li>
+			<li>
+				<div data-role="fieldcontain">
+					<label for="power_b">Socket B:</label>
+					<select name="data[power][b]" id="power_b" data-role="slider" data-track-theme="a" data-theme="a">
+						<option value="off" selected="selected">Off</option>
+						<option value="on">On</option>
+					</select>
+				</div>
+			</li>
+			<li>
+				<div data-role="fieldcontain">
+					<label for="power_c">Socket C:</label>
+					<select name="data[power][c]" id="power_c" data-role="slider" data-track-theme="a" data-theme="a">
+						<option value="off">Off</option>
+						<option value="on" selected="selected">On</option>
+					</select>
+				</div>
+			</li>
+			<li>
+				<div data-role="fieldcontain">
+					<label for="power_d">Socket D:</label>
+					<select name="data[power][d]" id="power_d" data-role="slider" data-track-theme="a" data-theme="a">
+						<option value="off" selected="selected">Off</option>
+						<option value="on">On</option>
+					</select>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d">
+		<h4>System Status</h4>
+		<ul data-role="listview">
+			<li>
+				<div data-role="fieldcontain">
+					<label for="status_temp">Room Temperature:</label>
+					<input readonly="readonly" type="text" id="status_temp" value="19 &deg;C">
+				</div>
+			</li>
+			<li>
+				<div data-role="fieldcontain">
+					<label for="status_cpu">CPU Load:</label>
+					<input readonly="readonly" type="text" id="status_cpu" value="12 %">
+				</div>
+			</li>
+		</ul>
+	</div>
+</form>
