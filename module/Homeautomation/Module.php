@@ -1,5 +1,5 @@
 <?php
-namespace Hapi;
+namespace Homeautomation;
 
 class Module
 {

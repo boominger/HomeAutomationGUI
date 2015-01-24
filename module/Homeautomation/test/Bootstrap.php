@@ -1,5 +1,5 @@
 <?php
-namespace HapiTest;
+namespace HomeautomationTest;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
