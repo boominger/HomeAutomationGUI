@@ -3,7 +3,7 @@
 
 <form id="index-form">
 	<div class="form-group">
-		<div class="container-fluid">
+		<div class="container-fluid" id="sockets">
 			<div class="row">
 				<label for="socket_1_off">Socket 1:</label>
 				<button type="button" id="socket_1_off" class="btn btn-default">Off</button>
@@ -37,3 +37,26 @@
 		</div>
 	</div>
 </form>
+<script type="text/javascript">
+$(function() {
+	$('#sockets button.btn').click(function() {
+		var buttonInfo = $(this).attr('id').split('_');
+		$.ajax({
+			url: "test.html",
+			data: { socket: buttonInfo[1], location: buttonInfo[2] }
+		}).done(function() {
+            BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_SUCCESS,
+                title: 'Sucess',
+                message: 'Socket "' + buttonInfo[1] + '" was powered ' + buttonInfo[2],
+            });     
+		}).fail(function() {
+            BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_WARNING,
+                title: 'Error',
+                message: 'Socket "' + buttonInfo[1] + '" could not be powered ' + buttonInfo[2],
+            });     
+		})
+	});
+});
+</script>

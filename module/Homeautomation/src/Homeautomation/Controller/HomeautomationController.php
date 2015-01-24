@@ -22,12 +22,7 @@ class HomeautomationController extends AbstractActionController
     	if(isset($_REQUEST['data'])) {
 	    	$session = new Container('homeautomation');
 	    	$session->formData = $_REQUEST['data'];
-	    	if(isset($_REQUEST['data']['led']['priority']) && isset($_REQUEST['data']['led']['brightness']) && isset($_REQUEST['data']['led']['color']) && isset($_REQUEST['data']['led']['status'])) {
-	    		exec("kill $(ps aux | grep '[b]oblight-constant' | awk '{print $2}')");
-	    		if($_REQUEST['data']['led']['status'] == 'on') {
-	    			exec("boblight-constant -p ".$_REQUEST['data']['led']['priority']." -o value=".$_REQUEST['data']['led']['brightness']." ".substr($_REQUEST['data']['led']['color'], 1));
-	    		}
-	    	}
+			//TODO logic
 	    	$jsonResponse['success'] = true;
     	}
     	
