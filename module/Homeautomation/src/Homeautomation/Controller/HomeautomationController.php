@@ -1,16 +1,16 @@
 <?php
-namespace Hapi\Controller;
+namespace Homeautomation\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 use Zend\Session\SessionManager;
 
-class HapiController extends AbstractActionController
+class HomeautomationController extends AbstractActionController
 {
     public function indexAction()
     {
-    	$session = new Container('hapi');
+    	$session = new Container('homeautomation');
     	
     	return new ViewModel(array(
     		'debug' => $session->formData,
@@ -20,7 +20,7 @@ class HapiController extends AbstractActionController
     public function ajaxAction() {
     	$jsonResponse = array('success' => false);
     	if(isset($_REQUEST['data'])) {
-	    	$session = new Container('hapi');
+	    	$session = new Container('homeautomation');
 	    	$session->formData = $_REQUEST['data'];
 	    	if(isset($_REQUEST['data']['led']['priority']) && isset($_REQUEST['data']['led']['brightness']) && isset($_REQUEST['data']['led']['color']) && isset($_REQUEST['data']['led']['status'])) {
 	    		exec("kill $(ps aux | grep '[b]oblight-constant' | awk '{print $2}')");

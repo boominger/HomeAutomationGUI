@@ -1,8 +1,8 @@
 <?php
-namespace HapiTest\Controller;
+namespace HomeautomationTest\Controller;
 
-use HapiTest\Bootstrap;
-use Hapi\Controller\HapiController;
+use HomeautomationTest\Bootstrap;
+use Homeautomation\Controller\HomeautomationController;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
@@ -10,7 +10,7 @@ use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 use PHPUnit_Framework_TestCase;
 
-class HapiControllerTest extends PHPUnit_Framework_TestCase
+class HomeautomationControllerTest extends PHPUnit_Framework_TestCase
 {
     protected $controller;
     protected $request;
@@ -21,7 +21,7 @@ class HapiControllerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $serviceManager = Bootstrap::getServiceManager();
-        $this->controller = new HapiController();
+        $this->controller = new HomeautomationController();
         $this->request    = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
         $this->event      = new MvcEvent();
