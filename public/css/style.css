@@ -2,6 +2,10 @@ body {
     padding-top: 60px;
     padding-bottom: 10px;
 }
+.navbar-brand img {
+	width:32px;
+	height:32px;
+}
 
 #sockets .row {
 	padding-bottom:15px;
