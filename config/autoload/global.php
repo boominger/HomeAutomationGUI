@@ -12,5 +12,30 @@
  */
 
 return array(
-    // ...
-);
+	'db' => array(
+		'driver' => 'Pdo',
+		'dsn' => 'mysql:dbname=homeautomation;host=localhost',
+		'driver_options' => array(
+			PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+		),
+	),
+	'navigation' => array(
+		'default' => array(
+			array(
+				'label' => 'Home',
+				'route' => 'home',
+			),
+			array(
+				'label' => 'Sysinfo',
+				'route' => 'homeautomation',
+				'action' => 'sysinfo'
+			),
+		),
+	),
+	'service_manager' => array(
+		'factories' => array(
+			'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+			'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory'
+		),
+	),
+ );

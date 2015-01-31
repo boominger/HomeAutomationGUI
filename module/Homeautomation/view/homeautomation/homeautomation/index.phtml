@@ -1,72 +1,26 @@
-<?php $this->headTitle($this->translate('Dashboard')); ?>
-<h1><?php echo $this->escapeHtml($this->translate('Dashboard')); ?></h1>
-<div class="container" id="sockets">
-	<div class="row show-grid">
-		<div class="col-xs-6">
-			<label><?php echo $this->translate('Socket') ?> 1</label>
-		</div>
-		<div class="col-xs-6">
-			<button type="button" id="socket_1_off" class="btn btn-default"><?php echo $this->translate('Off') ?></button>
-			<button type="button" id="socket_1_on" class="btn btn-primary"><?php echo $this->translate('On') ?></button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-6">
-			<label><?php echo $this->translate('Socket') ?> 2</label>
-		</div>
-		<div class="col-xs-6">
-			<button type="button" id="socket_2_off" class="btn btn-default"><?php echo $this->translate('Off') ?></button>
-			<button type="button" id="socket_2_on" class="btn btn-primary"><?php echo $this->translate('On') ?></button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-6">
-			<label><?php echo $this->translate('Socket') ?> 3</label>
-		</div>
-		<div class="col-xs-6">
-			<button type="button" id="socket_3_off" class="btn btn-default"><?php echo $this->translate('Off') ?></button>
-			<button type="button" id="socket_3_on" class="btn btn-primary"><?php echo $this->translate('On') ?></button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-6">
-			<label><?php echo $this->translate('Socket') ?> 4</label>
-		</div>
-		<div class="col-xs-6">
-			<button type="button" id="socket_4_off" class="btn btn-default"><?php echo $this->translate('Off') ?></button>
-			<button type="button" id="socket_4_on" class="btn btn-primary"><?php echo $this->translate('On') ?></button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-6">
-			<label><?php echo $this->translate('Socket') ?> 5</label>
-		</div>
-		<div class="col-xs-6">
-			<button type="button" id="socket_5_off" class="btn btn-default"><?php echo $this->translate('Off') ?></button>
-			<button type="button" id="socket_5_on" class="btn btn-primary"><?php echo $this->translate('On') ?></button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-6">
-			<label><?php echo $this->translate('Socket') ?> 6</label>
-		</div>
-		<div class="col-xs-6">
-			<button type="button" id="socket_6_off" class="btn btn-default"><?php echo $this->translate('Off') ?></button>
-			<button type="button" id="socket_6_on" class="btn btn-primary"><?php echo $this->translate('On') ?></button>
-		</div>
-	</div>
-</div>
-<hr />
-<div class="container" id="sysinfo">
-	<div class="row show-grid">
-		<div class="col-xs-6">
-			<label><?php echo $this->translate('Temperature') ?></label>
-		</div>
-		<div class="col-xs-6">
-			18 &deg;
-		</div>
-	</div>
-</div>
+<?php $this->headTitle($this->translate('Sockets')); ?>
+<h1><?php echo $this->translate('Sockets'); ?></h1>
+
+<table class="table" id="sockets">
+	<thead>
+		<tr>
+			<th><?php echo $this->translate('Label'); ?></th>
+			<th><?php echo $this->translate('Action'); ?></th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($this->sockets as $socket): ?>
+			<tr>
+				<td><label><?php echo $this->escapeHtml($socket->label);?></label></td>
+				<td>
+					<button type="button" id="socket_<?php echo $socket->id ?>_off" class="btn <?php if(!$socket->current_status): ?>btn-primary<? else: ?>btn-default<?php endif ?>"><?php echo $this->translate('Off') ?></button>
+					<button type="button" id="socket_<?php echo $socket->id ?>_on" class="btn <?php if($socket->current_status): ?>btn-primary<? else: ?>btn-default<?php endif ?>"><?php echo $this->translate('On') ?></button>
+				</td>
+			</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>
+
 <script type="text/javascript">
 $(function() {
 	$('#sockets button.btn').click(function() {
@@ -74,19 +28,18 @@ $(function() {
 		$.ajax({
 			url: '<?php echo $this->url('homeautomation', array('action' => 'ajax')) ?>',
 			data: { mode: 'socket', socket: buttonInfo[1], status: buttonInfo[2] },
+			cache: false,
 			dataType: 'json'
 		}).done(function(data) {
 			if(data.success == true) {
-				BootstrapDialog.show({
-					type: BootstrapDialog.TYPE_SUCCESS,
-					title: '<?php echo $this->translate('Success') ?>',
-					message: 'Socket "' + buttonInfo[1] + '" was powered ' + buttonInfo[2],
-				});
+				$('#socket_' + buttonInfo[1] + '_off').removeClass('btn-primary').addClass('btn-default');
+				$('#socket_' + buttonInfo[1] + '_on').removeClass('btn-primary').addClass('btn-default');
+				$('#socket_' + buttonInfo[1] + '_' + buttonInfo[2]).removeClass('btn-default').addClass('btn-primary');
 			} else {
 				BootstrapDialog.show({
 					type: BootstrapDialog.TYPE_WARNING,
 					title: '<?php echo $this->translate('Error') ?>',
-					message: 'Socket "' + buttonInfo[1] + '" could not be powered ' + buttonInfo[2],
+					message: 'Socket status could not be changed.',
 				}); 
 			}			
 		}).fail(function() {
