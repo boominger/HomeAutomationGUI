@@ -6,18 +6,7 @@ use Zend\View\Model\ViewModel;
 
 use Zend\Json\Json;
 
-use Zend\Http\Request;
-use Zend\Http\Client;
-use Zend\Stdlib\Parameters;
-
-//TODO list:
-//Model für rest api
-//Temperatur regelmäßig anfordern und loggen CREATE TABLE temperature datetime, temp
-//Cron schedule aq, temp; -> Crons in Zend2? http://stackoverflow.com/questions/19752109/how-to-run-cron-job-with-zend-framework-2
-
 class HomeautomationController extends AbstractActionController {
-	
-	const REST_API_URL = 'http://192.168.1.14/';
 
 	protected $_socketTable;
 	
@@ -58,24 +47,13 @@ class HomeautomationController extends AbstractActionController {
     }
 	
 	private function _getTemperature() {
-		$request = new Request();
-		$request->getHeaders()->addHeaders(array(
-			'Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8'
-		));
-		$request->setUri(self::REST_API_URL.'temp/get/');
-		$request->setMethod('GET');
-
-		$client = new Client();
-		$response = $client->dispatch($request);
-		if($response->getStatusCode() == '200') {
-			$data = json_decode($response->getBody(), true);
-			if($data['success']); {
-				return $data['value'];
-			}
+		$restClient = new \Homeautomation\Model\RestApi('temp', 'get');
+		$response = $restClient->request();
+		if($response && isset($response['success']) && $response['success'] == true) {
+			return $response['value'];
 		} else {
 			return false;
 		}
-		$data = json_decode($response->getBody(), true);
 	}
 	
 	private function _handleSocket($socketId, $status) {
@@ -89,22 +67,12 @@ class HomeautomationController extends AbstractActionController {
 				$newStatus = 0;
 			}
 			
-			$request = new Request();
-			$request->getHeaders()->addHeaders(array(
-				'Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8'
-			));
-			$request->setUri(self::REST_API_URL.'socket/'.$transmitCode.'/');
-			$request->setMethod('GET');
-
-			$client = new Client();
-			$response = $client->dispatch($request);
-			if($response->getStatusCode() == '200') {
-				$data = json_decode($response->getBody(), true);
-				if($data['success']) {
-					$socket->current_status = $newStatus;
-					$this->getSocketTable()->save($socket);
-				}
-				return $data['success'];
+			$restClient = new \Homeautomation\Model\RestApi('socket', $transmitCode);
+			$response = $restClient->request();
+			if($response && isset($response['success']) && $response['success'] == true) {
+				$socket->current_status = $newStatus;
+				$this->getSocketTable()->save($socket);
+				return true;
 			} else {
 				return false;
 			}

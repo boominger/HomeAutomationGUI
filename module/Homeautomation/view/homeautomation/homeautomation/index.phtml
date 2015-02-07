@@ -1,6 +1,5 @@
 <?php $this->headTitle($this->translate('Sockets')); ?>
 <h1><?php echo $this->translate('Sockets'); ?></h1>
-
 <table class="table" id="sockets">
 	<thead>
 		<tr>
@@ -13,42 +12,18 @@
 			<tr>
 				<td><label><?php echo $this->escapeHtml($socket->label);?></label></td>
 				<td>
-					<button type="button" id="socket_<?php echo $socket->id ?>_off" class="btn <?php if(!$socket->current_status): ?>btn-primary<? else: ?>btn-default<?php endif ?>"><?php echo $this->translate('Off') ?></button>
-					<button type="button" id="socket_<?php echo $socket->id ?>_on" class="btn <?php if($socket->current_status): ?>btn-primary<? else: ?>btn-default<?php endif ?>"><?php echo $this->translate('On') ?></button>
+					<button type="button" id="socket_<?php echo $socket->id ?>_off" class="btn <?php if(!$socket->current_status): ?>btn-primary<? else: ?>btn-default<?php endif ?>" autocomplete="off"><?php echo $this->translate('Off') ?></button>
+					<button type="button" id="socket_<?php echo $socket->id ?>_on" class="btn <?php if($socket->current_status): ?>btn-primary<? else: ?>btn-default<?php endif ?>" autocomplete="off"><?php echo $this->translate('On') ?></button>
 				</td>
 			</tr>
 		<?php endforeach ?>
 	</tbody>
 </table>
-
 <script type="text/javascript">
-$(function() {
-	$('#sockets button.btn').click(function() {
-		var buttonInfo = $(this).attr('id').split('_');
-		$.ajax({
-			url: '<?php echo $this->url('homeautomation', array('action' => 'ajax')) ?>',
-			data: { mode: 'socket', socket: buttonInfo[1], status: buttonInfo[2] },
-			cache: false,
-			dataType: 'json'
-		}).done(function(data) {
-			if(data.success == true) {
-				$('#socket_' + buttonInfo[1] + '_off').removeClass('btn-primary').addClass('btn-default');
-				$('#socket_' + buttonInfo[1] + '_on').removeClass('btn-primary').addClass('btn-default');
-				$('#socket_' + buttonInfo[1] + '_' + buttonInfo[2]).removeClass('btn-default').addClass('btn-primary');
-			} else {
-				BootstrapDialog.show({
-					type: BootstrapDialog.TYPE_WARNING,
-					title: '<?php echo $this->translate('Error') ?>',
-					message: 'Socket status could not be changed.',
-				}); 
-			}			
-		}).fail(function() {
-            BootstrapDialog.show({
-                type: BootstrapDialog.TYPE_WARNING,
-                title: '<?php echo $this->translate('Error') ?>',
-                message: 'Request failed.',
-            });     
-		})
-	});
-});
+var ajaxUrl = '<?php echo $this->url('homeautomation', array('action' => 'ajax')) ?>';
+var lang = {
+	error: '<?php echo $this->translate('Error') ?>',
+	errormessage: 'Socket status could not be changed.',
+	httperrormessage: 'Request failed.'
+}
 </script>

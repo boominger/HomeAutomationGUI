@@ -3,6 +3,7 @@ return array(
 	'controllers' => array(
 		'invokables' => array(
 			'Homeautomation\Controller\Homeautomation' => 'Homeautomation\Controller\HomeautomationController',
+			'Homeautomation\Controller\Cron' => 'Homeautomation\Controller\CronController'
 		),
 	),
 	// The following section is new and should be added to your file
@@ -23,6 +24,21 @@ return array(
 				),
 			),
 		),
+	),
+	'console' => array(
+		'router' => array(
+			'routes' => array(
+				'homeautomationcron' => array(
+					'options' => array(
+						'route'    => 'cron',
+						'defaults' => array(
+							'controller' => 'Homeautomation\Controller\Cron',
+							'action' => 'index'
+						)
+					)
+				)
+			)
+		)
 	),
 	'view_manager' => array(
 		'template_path_stack' => array(
