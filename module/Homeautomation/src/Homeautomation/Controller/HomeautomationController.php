@@ -18,13 +18,17 @@ class HomeautomationController extends AbstractActionController {
 		return $this->_socketTable;
 	}
 
-	public function indexAction() {
+	public function indexAction() {	
+		$this->_initTranslations();
+		
     	return new ViewModel(array(
     		'sockets' => $this->getSocketTable()->fetchAll(),
     	));
     }
     
     public function sysinfoAction() {
+    	$this->_initTranslations();
+    	
     	return new ViewModel(array(
     		'temperature' => $this->_getTemperature()
     	));
@@ -46,6 +50,13 @@ class HomeautomationController extends AbstractActionController {
     	return $this->getResponse()->setContent($jsonResponse);
     }
 	
+    private function _initTranslations() {
+    	$loc = $this->getServiceLocator();
+    	$translator = $loc->get('translator');
+    	$translator->addTranslationFile("phparray", './module/Homeautomation/language/lang.array.de.php');
+    	$loc->get('ViewHelperManager')->get('translate')->setTranslator($translator);
+    }
+    
 	private function _getTemperature() {
 		$restClient = new \Homeautomation\Model\RestApi('temp', 'get');
 		$response = $restClient->request();

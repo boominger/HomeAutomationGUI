@@ -22,7 +22,7 @@ return array(
 	'navigation' => array(
 		'default' => array(
 			array(
-				'label' => 'Home',
+				'label' => 'Sockets',
 				'route' => 'home',
 			),
 			array(
