@@ -43,7 +43,7 @@ $(function() {
 			dataType: 'json'
 		}).done(function(data) {
 			if(data.success == true) {
-				$btn.html(data.temperature + '&deg;C');
+				$btn.html(data.value + '&deg;C');
 			} else {
 				BootstrapDialog.show({
 					type: BootstrapDialog.TYPE_WARNING,

@@ -16,7 +16,7 @@ class RestApi {
 	public function __construct($method = null, $action = null, $additionalParamsArray = array()) {
 		$this->_method = $method;
 		$this->_action = $action;
-		$this->_additionalParams = implodex("/", $additionalParamsArray);
+		$this->_additionalParams = implode("/", $additionalParamsArray);
 	}
 	
 	public function request() {
