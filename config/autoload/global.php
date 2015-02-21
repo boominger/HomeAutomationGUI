@@ -14,7 +14,7 @@
 return array(
 	'db' => array(
 		'driver' => 'Pdo',
-		'dsn' => 'mysql:dbname=homeautomation;host=diskstation',
+		'dsn' => 'mysql:dbname=homeautomation;host=192.168.1.3',
 		'driver_options' => array(
 			PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
 		),
