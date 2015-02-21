@@ -12,8 +12,8 @@
 			<tr>
 				<td><label><?php echo $this->escapeHtml($socket->label);?></label></td>
 				<td>
-					<button type="button" id="socket_<?php echo $socket->id ?>_off" class="btn <?php if(!$socket->current_status): ?>btn-primary<? else: ?>btn-default<?php endif ?>" autocomplete="off"><?php echo $this->translate('Off') ?></button>
-					<button type="button" id="socket_<?php echo $socket->id ?>_on" class="btn <?php if($socket->current_status): ?>btn-primary<? else: ?>btn-default<?php endif ?>" autocomplete="off"><?php echo $this->translate('On') ?></button>
+					<button type="button" id="socket_<?php echo $socket->id ?>_off" class="btn <?php if(!$socket->current_status): ?>btn-primary<?php else: ?>btn-default<?php endif ?>"><?php echo $this->translate('Off') ?></button>
+					<button type="button" id="socket_<?php echo $socket->id ?>_on" class="btn <?php if($socket->current_status): ?>btn-primary<?php else: ?>btn-default<?php endif ?>"><?php echo $this->translate('On') ?></button>
 				</td>
 			</tr>
 		<?php endforeach ?>
