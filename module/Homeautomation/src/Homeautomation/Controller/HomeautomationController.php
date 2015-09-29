@@ -49,6 +49,20 @@ class HomeautomationController extends AbstractActionController {
 		$this->getResponse()->getHeaders()->addHeaders(array('Content-Type' => 'application/json;charset=UTF-8'));
     	return $this->getResponse()->setContent($jsonResponse);
     }
+    
+    public function statusAction() {
+        $jsonResponse = array('active' => false);
+        
+        $socketId = $this->getRequest()->getQuery()->socket;
+        if($socketId) {
+            $socket = $this->getSocketTable()->load($socketId);
+            $jsonResponse['active'] = ($socket->current_status == 1 ? true : false);
+        }
+        
+        $jsonResponse = Json::encode($jsonResponse);
+        $this->getResponse()->getHeaders()->addHeaders(array('Content-Type' => 'application/json;charset=UTF-8'));
+        return $this->getResponse()->setContent($jsonResponse);
+    }
 	
     private function _initTranslations() {
     	$loc = $this->getServiceLocator();
