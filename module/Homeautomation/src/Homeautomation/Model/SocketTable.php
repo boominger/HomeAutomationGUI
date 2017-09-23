@@ -12,7 +12,7 @@ class SocketTable {
 	}
 
 	public function fetchAll() {
-		$resultSet = $this->tableGateway->select();
+		$resultSet = $this->tableGateway->select(array('status' => 1));
 		return $resultSet;
 	}
 
