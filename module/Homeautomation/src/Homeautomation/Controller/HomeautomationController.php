@@ -26,23 +26,12 @@ class HomeautomationController extends AbstractActionController {
     	));
     }
     
-    public function sysinfoAction() {
-    	$this->_initTranslations();
-    	
-    	return new ViewModel(array(
-    		'temperature' => $this->_getTemperature()
-    	));
-    }
-    
     public function ajaxAction() {
     	$jsonResponse = array('success' => false);
     	if($this->getRequest()->getQuery()->mode == 'socket') {
 			$socketId = (int)$this->getRequest()->getQuery()->socket;
 			$status = $this->getRequest()->getQuery()->status;
 	    	$jsonResponse['success'] = $this->_handleSocket($socketId, $status);
-    	} elseif($this->getRequest()->getQuery()->mode == 'temperature') {
-			$jsonResponse['success'] = true;
-			$jsonResponse['value'] = $this->_getTemperature();
 		}
     	
 		$jsonResponse = Json::encode($jsonResponse);
@@ -70,16 +59,6 @@ class HomeautomationController extends AbstractActionController {
     	$translator->addTranslationFile("phparray", './module/Homeautomation/language/lang.array.de.php');
     	$loc->get('ViewHelperManager')->get('translate')->setTranslator($translator);
     }
-    
-	private function _getTemperature() {
-		$restClient = new \Homeautomation\Model\RestApi('temp', 'get');
-		$response = $restClient->request();
-		if($response && isset($response['success']) && $response['success'] == true) {
-			return $response['value'];
-		} else {
-			return false;
-		}
-	}
 	
 	private function _handleSocket($socketId, $status) {
 		$socket = $this->getSocketTable()->load($socketId);

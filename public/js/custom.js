@@ -31,34 +31,4 @@ $(function() {
             });     
 		});
 	});
-	
-	//Sysinfo
-	//TODO recover :(
-	$('#btn_temperature').click(function() {
-		var $btn = $(this).button('loading');
-		$.ajax({
-			url: ajaxUrl,
-			data: { mode: 'temperature' },
-			cache: false,
-			dataType: 'json'
-		}).done(function(data) {
-			if(data.success == true) {
-				$btn.html(data.value + '&deg;C');
-			} else {
-				BootstrapDialog.show({
-					type: BootstrapDialog.TYPE_WARNING,
-					title: lang.error,
-					message: lang.errormessage,
-				}); 
-			}
-			$btn.button('reset');
-		}).fail(function() {
-            BootstrapDialog.show({
-                type: BootstrapDialog.TYPE_WARNING,
-                title: lang.error,
-                message: lang.httperrormessage,
-            });
-            $btn.button('reset')
-		});
-	});
 });

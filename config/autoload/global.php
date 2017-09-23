@@ -25,11 +25,6 @@ return array(
 				'label' => 'Sockets',
 				'route' => 'home',
 			),
-			array(
-				'label' => 'Sysinfo',
-				'route' => 'homeautomation',
-				'action' => 'sysinfo'
-			),
 		),
 	),
 	'service_manager' => array(
